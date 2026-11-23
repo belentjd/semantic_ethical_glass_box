@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- `GET /query` and `POST /query/validate` no longer reject a valid SPARQL query when the `PREFIX`/`BASE` declarations
+  and the query form share a line (for example `PREFIX ex: <...> SELECT ...`). The query kind was detected by a pattern
+  that consumed the whole line after the directive, including the query keyword, so the request failed with `422`
+  ("Query must start with SELECT/CONSTRUCT/ASK/DESCRIBE or an update operation."). A write operation after a one-line
+  prologue is still refused on `/query` (#58).
+
 ## 1.3.1 - 2026-11-02
 
 Maintenance release on top of 1.3.0: frontend development-dependency security fixes, a fix for the `segb-ui` container

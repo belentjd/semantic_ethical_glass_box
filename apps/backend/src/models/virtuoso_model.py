@@ -484,7 +484,8 @@ class VirtuosoModel:
         text = query.strip()
         while True:
             text = re.sub(r"^\s*#.*(?:\n|$)", "", text)
-            directive = re.match(r"^\s*(?:PREFIX|BASE)\b[^\n]*(?:\n|$)", text, flags=re.IGNORECASE)
+            # Consume only the directive itself: the prologue and the query form may share a line (#58).
+            directive = re.match(r"^\s*(?:PREFIX\s+[^\s:]*:\s*<[^>]*>|BASE\s*<[^>]*>)", text, flags=re.IGNORECASE)
             if not directive:
                 break
             text = text[directive.end() :]
