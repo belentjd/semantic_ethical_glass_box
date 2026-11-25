@@ -52,6 +52,11 @@ class TestVirtuosoQueryValidation(unittest.TestCase):
             "base and prefix": "BASE <http://example.org/> PREFIX ex: <http://example.org/> SELECT ?s { ?s ex:p ?o }",
             "lowercase keywords": "prefix ex: <http://example.org/> select ?s { ?s ex:p ?o }",
             "comment then one line": "# note\nPREFIX ex: <http://example.org/> SELECT ?s { ?s ex:p ?o }",
+            "trailing comment then comment line": (
+                "PREFIX ex: <http://example.org/> # ns\n# note\nSELECT ?s { ?s ex:p ?o }"
+            ),
+            "consecutive leading comments": "# a\n# b\nSELECT ?s { ?s ?p ?o }",
+            "prefix then consecutive comments": "PREFIX ex: <http://example.org/>\n# c\n# d\nSELECT ?s { ?s ex:p ?o }",
             "separate lines (already worked)": "PREFIX ex: <http://example.org/>\nSELECT ?s { ?s ex:p ?o }",
         }
         for name, query in cases.items():

@@ -483,7 +483,7 @@ class VirtuosoModel:
     def _leading_keyword(self, query: str) -> str:
         text = query.strip()
         while True:
-            text = re.sub(r"^\s*#.*(?:\n|$)", "", text)
+            text = re.sub(r"^(?:\s*#[^\n]*(?:\n|$))+", "", text)
             # Consume only the directive itself: the prologue and the query form may share a line (#58).
             directive = re.match(r"^\s*(?:PREFIX\s+[^\s:]*:\s*<[^>]*>|BASE\s*<[^>]*>)", text, flags=re.IGNORECASE)
             if not directive:
